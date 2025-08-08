@@ -1,3 +1,6 @@
+#define NOB_IMPLEMENTATION
+#include "../nob.h"
+
 #include "lexer.h"
 #include <assert.h>
 #include <ctype.h>
@@ -95,7 +98,7 @@ static void next_token(Lexer *l) {
   else if (c == ')') add_token(l, TOK_RPAREN);
   else if (c == '#') add_token(l, TOK_HASH);
   else if (c == ';') { // skip comments
-    while ((c = l->data[++l->pos]) != '\n' || c == '\r' && l->pos < l->len);
+    while (((c = l->data[++l->pos]) != '\n' || c == '\r') && l->pos < l->len);
   }
   else if (c == '%') { // binary number literal
     add_number(l, 2);
@@ -161,6 +164,7 @@ const char *token_name(TokenKind kind) {
     case TOK_NEWLINE: return "newline";
     case TOK_END: return "end token";
   }
+  NOB_UNREACHABLE("All TokenKind's should be handled.");
 }
 
 void scan(Lexer *l) {

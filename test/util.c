@@ -89,7 +89,7 @@ static void _cmp(const char *name, const char *code, Token *tokens) {
     i++;
   }
 
-  if (i != lexer.tok_cur) {
+  if (i != (int)lexer.tok_cur) {
     fail_print("%s - mismatched token count (%zu vs %d)\n", name, lexer.tok_cur, i);
     return;
   }
